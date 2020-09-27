@@ -33,20 +33,19 @@ const Generos = ({ datos }) => {
 
 	return (
 		<>
-			{generosBusqueda.length > 0
-				? generosBusqueda.map((genero) => {
-						return (
-							<div key={genero.id} className='contenedor-generos'>
-								<h3>{genero.name}</h3>
-								{datos.map((pelicula) =>
-									pelicula.genero.map((numero) =>
-										numero === genero.id ? <EntradaPelicula key={pelicula.genero.numero} datos={pelicula} /> : ''
-									)
-								)}
-							</div>
-						);
-				  })
-				: ''}
+			{generosBusqueda.length > 0 &&
+				generosBusqueda.map((genero) => {
+					return (
+						<div key={genero.name} className='contenedor-generos'>
+							<h3 key={genero.id}>{genero.name}</h3>
+							{datos.map((pelicula) =>
+								pelicula.genero.map(
+									(numero) => numero === genero.id && <EntradaPelicula key={pelicula.titulo} datos={pelicula} />
+								)
+							)}
+						</div>
+					);
+				})}
 		</>
 	);
 };

@@ -5,8 +5,8 @@ const App = () => {
 	const [datosPelicula, setDatosPelicula] = useState([]);
 
 	const BusquedaPelicula = async ({ target }) => {
-		if (target.value.length === 0) return setDatosPelicula([]);
 		try {
+			if (target.value.length === 0) return setDatosPelicula([]);
 			const data = await fetch(
 				`https://api.themoviedb.org/3/search/movie?api_key=314dd2fd158d1a156815bfda6f2037c3&page=1&query=${target.value}`
 			);
@@ -35,18 +35,21 @@ const App = () => {
 	};
 
 	const actualizar = (obj) => {
-		const nuevo = [];
-		nuevo.push(obj);
-		const filtrado = [...new Set(nuevo)];
-		setDatosPelicula(filtrado);
-	};
+		const filtro = datosPelicula.filter((pelicula) => pelicula.id !== obj.id && pelicula);
 
-	// por arreglar el key prop de generos
+		if (filtro.length >= datosPelicula.length) {
+			setDatosPelicula([...datosPelicula, obj]);
+		} else {
+			const mover = [...new Set(datosPelicula)];
+			const filtro = mover.filter((pelicula) => mover.indexOf(pelicula) !== mover.length - 1 && pelicula);
+			setDatosPelicula(filtro);
+		}
+	};
 
 	return (
 		<>
 			<input type='text' className='form-control' placeholder='Buscador' onChange={(ev) => BusquedaPelicula(ev)} />
-			<div className='cuadro-resultados'>{datosPelicula.length > 0 ? <Generos datos={datosPelicula} /> : ''}</div>
+			<div className='cuadro-resultados'>{datosPelicula.length > 0 && <Generos datos={datosPelicula} />}</div>
 		</>
 	);
 };

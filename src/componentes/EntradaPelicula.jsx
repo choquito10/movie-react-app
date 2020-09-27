@@ -15,7 +15,7 @@ const EntradaPelicula = ({ datos }) => {
 						<strong>Titulo: </strong> {datos.titulo}
 					</h5>
 					<p className='card-text'>
-						<strong>Director: </strong> {datos.director.map((e) => (e !== '' ? e + ',' : ''))}
+						<strong>Director: </strong> {datos.director.map((e) => e !== '' && e + ',')}
 					</p>
 					<p className='card-text'>
 						<strong>Actores: </strong> {datos.personal.map((e) => e + ',')}
